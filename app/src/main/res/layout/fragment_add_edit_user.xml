@@ -35,7 +35,8 @@
         android:layout_height="wrap_content"
         android:text="姓名:"
         android:textStyle="bold"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginTop="16dp"/>
+
     <EditText
         android:id="@+id/edtName"
         android:layout_width="match_parent"
@@ -48,13 +49,15 @@
         android:layout_height="wrap_content"
         android:text="電話號碼:"
         android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginTop="16dp"/>
+
     <EditText
         android:id="@+id/edtPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="輸入電話號碼" />
+        android:inputType="phone"
+        android:hint="輸入電話號碼"/>
+
 
     <!-- 簡介 -->
     <TextView
@@ -62,8 +65,8 @@
         android:layout_height="wrap_content"
         android:text="簡介:"
         android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginTop="16dp"/>
+
     <EditText
         android:id="@+id/edtDescription"
         android:layout_width="match_parent"
@@ -85,4 +88,5 @@
         android:layout_height="wrap_content"
         android:text="刪除"
         android:visibility="gone" />
+
 </LinearLayout>

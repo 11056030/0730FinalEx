@@ -59,9 +59,6 @@ class AddEditUserFragment : Fragment() {
         btnSave = view.findViewById(R.id.btnSave)
         btnDelete = view.findViewById(R.id.btnDelete)
 
-        // 禁用編輯電話欄位
-        edtPhone.isEnabled = false
-
         // 初始化資料庫
         db = Room.databaseBuilder(
             requireContext().applicationContext,
@@ -73,10 +70,15 @@ class AddEditUserFragment : Fragment() {
         arguments?.let {
             selectedUser = it.getSerializable("user") as User?
             selectedUser?.let { user ->
+                // 編輯模式下顯示現有使用者的資訊並禁用電話編輯
                 edtName.setText(user.name)
                 edtPhone.setText(user.phoneNumber)
                 edtDescription.setText(user.description)
                 imageView.setImageBitmap(BitmapFactory.decodeByteArray(user.photo, 0, user.photo.size))
+                edtPhone.isEnabled = false
+            } ?: run {
+                // 新增模式允許編輯電話
+                edtPhone.isEnabled = true
             }
         }
 
@@ -106,6 +108,7 @@ class AddEditUserFragment : Fragment() {
 
         return view
     }
+
 
 
     private fun checkStoragePermission() {
