@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController: NavController = navHostFragment.navController
 
-        // 將每個菜單 ID 視為一組 ID，因為每個菜單都應被視為頂級目的地。
         val appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_home, R.id.navigation_add, R.id.navigation_guagua))
 

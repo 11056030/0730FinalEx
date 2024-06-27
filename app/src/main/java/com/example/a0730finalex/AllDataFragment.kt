@@ -60,7 +60,6 @@ class AllDataFragment : Fragment() {
 
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        // 初始化資料庫
         db = Room.databaseBuilder(
             requireContext().applicationContext,
             AppDatabase::class.java, "database-name"

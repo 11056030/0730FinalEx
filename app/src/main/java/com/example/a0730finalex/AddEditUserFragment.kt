@@ -59,25 +59,21 @@ class AddEditUserFragment : Fragment() {
         btnSave = view.findViewById(R.id.btnSave)
         btnDelete = view.findViewById(R.id.btnDelete)
 
-        // 初始化資料庫
         db = Room.databaseBuilder(
             requireContext().applicationContext,
             AppDatabase::class.java, "database-name"
         ).build()
         userDao = db.userDao()
 
-        // 接收從前一個Fragment傳遞過來的 User 物件
         arguments?.let {
             selectedUser = it.getSerializable("user") as User?
             selectedUser?.let { user ->
-                // 編輯模式下顯示現有使用者的資訊並禁用電話編輯
                 edtName.setText(user.name)
                 edtPhone.setText(user.phoneNumber)
                 edtDescription.setText(user.description)
                 imageView.setImageBitmap(BitmapFactory.decodeByteArray(user.photo, 0, user.photo.size))
                 edtPhone.isEnabled = false
             } ?: run {
-                // 新增模式允許編輯電話
                 edtPhone.isEnabled = true
             }
         }
@@ -98,7 +94,6 @@ class AddEditUserFragment : Fragment() {
             deleteUser()
         }
 
-        // 處理返回按鈕行為
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 Log.d("AddEditUserFragment", "Back button pressed, navigating up")
@@ -128,7 +123,6 @@ class AddEditUserFragment : Fragment() {
         when (requestCode) {
             REQUEST_STORAGE_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // 用戶授權，執行選擇圖片操作
                     selectImage()
                 } else {
                     Toast.makeText(requireContext(), "沒有存儲權限，無法選擇圖片", Toast.LENGTH_SHORT).show()
@@ -159,7 +153,6 @@ class AddEditUserFragment : Fragment() {
         val photo = selectedImage?.let { bitmapToByteArray(it) } ?: getDefaultAvatar()
 
         if (selectedUser == null) {
-            // 新增用戶
             val user = User(phone, name, description, photo)
             lifecycleScope.launch {
                 try {
@@ -172,7 +165,6 @@ class AddEditUserFragment : Fragment() {
                 }
             }
         } else {
-            // 更新用戶
             val updatedUser = selectedUser!!.copy(name = name, description = description, photo = photo)
             lifecycleScope.launch {
                 try {
@@ -221,11 +213,9 @@ class AddEditUserFragment : Fragment() {
     private fun validatePhone(): Boolean {
         val phone = edtPhone.text.toString().trim()
 
-        // 定義電話號碼的正則表達式，這裡限制為 10 位數字
         val phonePattern = Pattern.compile("^\\d{10}\$")
         val matcher = phonePattern.matcher(phone)
 
-        // 驗證通過返回 true，否則返回 false
         return matcher.matches()
     }
 
